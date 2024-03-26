@@ -62,7 +62,13 @@ class Libretto:
             if v.esame == esame:
                 return v
 
-
+    def stampa(self):
+        outList = []
+        outList.append(f"Hai {len(self._voti)} voti")
+        for v in self._voti:
+            outList.append(v)
+        outList.append(f"La media vale {self.media()}")
+        return outList
 '''
 @dataclass  # è un decoratore, trasforma la classe, costruisce da solo i metodi di base che la definiscono 
 class Voto:
@@ -96,3 +102,11 @@ print(mio_libretto.media())
 # __eq__ è un metodo equals, lo chiami con ==
 # __lt__ è un compareTo, lo chiami con gli operatori < > <= >= !=
 # i metodi dunder ridefiniscono le operazioni predefiniti sugli oggetti della classe
+# @dataclasses.dataclass(order=True) implementa l'ordinamento in base ai parametri della classe
+# se non vuoi includere un parametro nei criteri di ordinamento lo scrivi nel init parametro = field(compare=False)
+# nel sort posso usare il parametro key = metodo cioè una chiave che usa una funzione:
+# questa funzione prende un oggetto ed estrae un campo sulla base di cui vuoi ordinare (attribute getter):
+# sort(key = operator.attrgetter('nome attributo'))
+# puoi anche usare key = lambda valore: funzione, cioè una funzione usa e getta
+
+
