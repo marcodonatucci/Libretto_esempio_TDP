@@ -2,6 +2,8 @@ from libretto import Libretto
 from voto import Voto
 import flet as ft
 from view import View
+import datetime
+
 
 # ci mettiamo tutti i metodi che lavorano con l'interfaccia grafica
 
@@ -18,7 +20,37 @@ class Controller(object):
         self._model.append(Voto("Analisi 2", 8, 30, True, '2023-02-15'))
 
     def handleAdd(self, e):
-        pass
+        nomeEsame = self._view.txtIn.value
+        if nomeEsame == "":
+            self._view.lvOut.controls.append(ft.Text("Il campo nome non può essere vuoto", color="red"))
+            self._view.page.update()
+            return
+        cfu = self._view.txtCFU.value
+        try:
+            intCFU = int(cfu)
+        except ValueError:
+            self._view.lvOut.controls.append(ft.Text("Il campo CFU deve essere un intero", color="red"))
+            self._view.page.update()
+            return
+        punteggio = self._view.ddVoto.value
+        if punteggio is None:
+            self._view.lvOut.controls.append(ft.Text("Il campo punteggio va selezionato", color="red"))
+            self._view.page.update()
+            return
+        if punteggio == "30L":
+            punteggio = 30
+            lode = True
+        else:
+            punteggio = int(punteggio)
+            lode = False
+        data = self._view.datePicker.value
+        if data is None:
+            self._view.lvOut.controls.append(ft.Text("Seleziona la data", color="red"))
+            self._view.page.update()
+            return
+        self._model.append(Voto(nomeEsame, intCFU, punteggio, lode, f"{data.year}-{data.month}-{data.day}"))
+        self._view.lvOut.controls.append(ft.Text("Voto correttamente aggiunto", color="green"))
+        self._view.page.update()
 
     def handlePrint(self, e):
         outList = self._model.stampa()

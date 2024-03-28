@@ -65,3 +65,19 @@ class View(object):
     @property
     def page(self):
         return self._page
+
+    @property
+    def txtIn(self):
+        return self._txtIn
+
+    @property
+    def txtCFU(self):
+        return self._txtCFU
+
+    @property
+    def ddVoto(self):
+        return self._ddVoto
+
+    @property
+    def datePicker(self):
+        return self._datePicker
